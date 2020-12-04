@@ -1,6 +1,7 @@
 const LocalStrategy = require('passport-local').Strategy
 const bcrypt = require('bcryptjs')
 
+// Function for authenticating users and generating error messages
 function initialize(passport, getUserByEmail, getUserById) {
   const authenticateUser = async (email, password, done) => {
     const user = getUserByEmail(email)
