@@ -8,6 +8,7 @@ if (process.env.NODE_ENV !== 'production') {
   const passport = require('passport')
   const flash = require('express-flash')
   const session = require('express-session')
+
   const methodOverride = require('method-override')
 
   // Initialize Passport.js for login inputs
