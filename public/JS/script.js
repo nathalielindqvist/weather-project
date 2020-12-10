@@ -5,15 +5,15 @@ async function getSmhi() {
         const response = await fetch("https://opendata-download-metobs.smhi.se/api/version/latest/parameter/1.json");
         const data = await response.json();
         const weatherStations = data.station;
-        
+
 
         ///////////////////////////////////////////////////////////
         ////////////////////////////////SÖKFUNKTIONEN///////////////
-        let searchBtn = document.getElementById("searchInput");
+        let searchBtn = document.getElementById("searchBtn");
         searchBtn.addEventListener("click", function (e) {
             try {
                 e.preventDefault();
-                
+
                 let searchValue = document.getElementById("searchInput").value;
                 lowerCaseSearchValue = searchValue.toLowerCase();
 
@@ -28,25 +28,25 @@ async function getSmhi() {
                 console.error(error);
             }
 
-        }) 
-////////////////////////////////////////////////////////////
-///////////GÖR FÖRSTA BOKSTAV I STRÄNG TILL STOR BOKSTAV
+        })
+        ////////////////////////////////////////////////////////////
+        ///////////GÖR FÖRSTA BOKSTAV I STRÄNG TILL STOR BOKSTAV
         function capitalizeFirstLetter(string) {
             return string.charAt(0).toUpperCase() + string.slice(1);
-          }
-                  
-        
-    //////////////////////////////////////////////////////////
-    /////////////////PLACERAR ALLA MÄTSTATIONER I EN LISTA////
+        }
+
+
+        //////////////////////////////////////////////////////////
+        /////////////////PLACERAR ALLA MÄTSTATIONER I EN LISTA////
         let appList = document.getElementById("ulList");
-        for(let i = 0; i < weatherStations.length; i++){
+        for (let i = 0; i < weatherStations.length; i++) {
             let listItem = document.createElement("li");
             listItem.setAttribute("class", "listClass");
             listItem.innerHTML = weatherStations[i].name;
             let listButton = document.createElement("button");
             listButton.setAttribute("class", "listButton");
             listButton.innerHTML = "Button";
-            appList.appendChild(listItem).appendChild(listButton);
+            appList.appendChild(listItem).appendChild("listBtn");
 
             listButton.addEventListener("click", function (e) {
 
@@ -59,175 +59,159 @@ async function getSmhi() {
             })
 
         }
-/////////////////////////////////////////////
-/////////////////HÄMTAR LONGITUD
+        /////////////////////////////////////////////
+        /////////////////HÄMTAR LONGITUD
         function getLong(townLong) {
             townLong = Math.round(townLong.longitude);
-            return townLong;            
+            return townLong;
         }
-//////////////////////////////////////////////
-////////////////////////////////////HÄMTAR LATITUD
+        //////////////////////////////////////////////
+        ////////////////////////////////////HÄMTAR LATITUD
         function getLat(townLat) {
             townLat = Math.round(townLat.latitude);
             return townLat;
         }
-////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////HÄMTAR SPECIFIK MÄTSTATIONS INFO
+        ////////////////////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////HÄMTAR SPECIFIK MÄTSTATIONS INFO
 
-       
-  
-      async function getTown(long, lat) {
-        try {
-          const townResponse = await fetch("https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/" + long + "/lat/" + lat + "/data.json");
-          const townData = await townResponse.json();
-          console.log(townData);
-          var todayList =  document.getElementById('TimeToday');
-      
-          var nu = townData.timeSeries[0].validTime;
-          var nuvarandeTid = nu.slice(11, 13);
-          midnatt = 24 - nuvarandeTid;
-          
-          //////console.log("Väderprognos för resten av dagen:")//////
-          for (i = 0; i < midnatt; i++) {
-              var temp = (townData.timeSeries[i].parameters[1].values[0]);
-              var nederbrPrognos = (townData.timeSeries[i].parameters[15].values[0]);
-              var mps = (townData.timeSeries[i].parameters[4].values[0]);
-              var molnTotal = (townData.timeSeries[i].parameters[7].values[0]);
-              var humidity = (townData.timeSeries[i].parameters[5].values[0]);
 
-              var elmntTime = document.createElement("ul")
-              elmntTime.innerHTML = "-----Klockan " + nuvarandeTid + ":00";
-              var elmntTemp = document.createElement("li")
-              elmntTemp.innerHTML = temp + "°";
-              var elmntWind = document.createElement("li")
-              elmntWind.innerHTML = mps + " m/sek";
-              var elmntHumidity = document.createElement("li")
-              elmntHumidity.innerHTML = humidity + "% luftfuktighet";
-              
-              getRegn();
-              getMoln();
-            /*  var elmntCloud = document.createElement("li");
-            elmntCloud.innerHTML = molnighet; */
-              todayList.appendChild(elmntTime);
-              elmntTime.appendChild(elmntTemp);
-              elmntTime.appendChild(elmntWind);
-              elmntTime.appendChild(elmntHumidity);
-             /* elmntTime.appendChild(elmntCloud);
-              elmntTime.appendChild(elmntRain); */
-              
-            nuvarandeTid++;
-            
-          }
-          
-          console.log("Väderprognos för imorgon:" );
-          var tomorrowList =  document.getElementById('TimeTomorrow');
-          var imorgon = midnatt + 24;
-          var u = 0; 
-          for (i = midnatt; i < imorgon; i++ ) {
-              var temp = (townData.timeSeries[i].parameters[1].values[0]);
-              var nederbrPrognos = (townData.timeSeries[i].parameters[15].values[0]);
-              var mps = (townData.timeSeries[i].parameters[4].values[0]);
-              var molnTotal = (townData.timeSeries[i].parameters[7].values[0]);
-              var humidity = (townData.timeSeries[i].parameters[5].values[0]);
 
-              var elmntTimeTomorrow = document.createElement("ul")
-              elmntTimeTomorrow.innerHTML = "-----Klockan " + u + ":00";
-              var elmntTempTomorrow = document.createElement("li")
-              elmntTempTomorrow.innerHTML = temp + "°";
-              var elmntWindTomorrow = document.createElement("li")
-              elmntWindTomorrow.innerHTML = mps + "m/sek";
-              var elmntHumidityTomorrow = document.createElement("li")
-              elmntHumidityTomorrow.innerHTML = humidity + "% luftfuktighet";
+        async function getTown(long, lat) {
+            try {
+                const townResponse = await fetch("https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/" + long + "/lat/" + lat + "/data.json");
+                const townData = await townResponse.json();
+                console.log(townData);
 
-              tomorrowList.appendChild(elmntTimeTomorrow);
-              elmntTimeTomorrow.appendChild(elmntTempTomorrow);
-              elmntTimeTomorrow.appendChild(elmntWindTomorrow);
-              elmntTimeTomorrow.appendChild(elmntHumidityTomorrow);
+                function prognos(index) {
 
-           /* console.log("-----Klockan " + u)
-            console.log(temp + "°");
-            getRegn();
-            console.log(mps + " m/sek");
-            getMoln();
-            console.log(humidity + "% luftfuktighet");
-            console.log(" "); */
-            u ++; 
-          }
-  
-  
-          async function getMoln() {
-            var molnighet;
-            switch (molnTotal) {
-              case 0:
-                molnighet = "klar himmel";
-                break;
-              case 1:
-                molnighet = "lite moln";
-                break;
-              case 2:
-                molnighet = "lagom mycket moln";
-                break;
-              case 3:
-                molnighet = "lagom mycket moln";
-                break;
-              case 4:
-                molnighet = "hälften moln, hälften himmel";
-                break;
-              case 5:
-                molnighet = "ganska mycket moln";
-                break;
-              case 6:
-                molnighet = "mestadels moln";
-                break;
-              case 7:
-                molnighet = "fullt molntäcke";
-                break;
-              case 8:
-                molnighet = "fullt molntäcke";
+                    var nu = townData.timeSeries[0].validTime;
+                    var nuvarandeTid = nu.slice(11, 16);
+
+                    let timeParameterIndex = townData.timeSeries[index].parameters;
+
+                    var temp = timeParameterIndex.find(element => element.name === "t");
+                    var nederbrPrognos = timeParameterIndex.find(element => element.name === "pcat");
+                    var mps = timeParameterIndex.find(element => element.name === "gust")
+                    var molnTotal = timeParameterIndex.find(element => element.name === "Wsymb2")
+                    // var molnTotal = (townData.timeSeries[index].parameters[7].values[0]);
+
+                    var humidity = timeParameterIndex.find(element => element.name === "r");
+
+                    var elmntTime = document.createElement("ul")
+                    elmntTime.innerHTML = "-----Klockan " + nuvarandeTid;
+                    var elmntTemp = document.createElement("li")
+                    elmntTemp.innerHTML = temp.values + "°C";
+                    var elmntWind = document.createElement("li")
+                    elmntWind.innerHTML = mps.values + " m/sek";
+                    var elmntHumidity = document.createElement("li")
+                    elmntHumidity.innerHTML = humidity.values[0] + "% luftfuktighet";
+                    var elmntCloud = document.createElement("li");
+                    elmntCloud.innerHTML = getMoln(molnTotal.values[0]);
+                    var elmntRain = document.createElement("li");
+                    elmntRain.innerHTML = getRegn(nederbrPrognos.values[0]);
+
+
+                    elmntTime.appendChild(elmntTemp);
+                    elmntTime.appendChild(elmntWind);
+                    elmntTime.appendChild(elmntHumidity);
+                    elmntTime.appendChild(elmntCloud);
+                    elmntTime.appendChild(elmntRain);
+
+
+
+                    function getMoln(moln) {
+                        var molnighet;
+                        switch (moln) {
+                            case 0:
+                                molnighet = "klar himmel";
+                                break;
+                            case 1:
+                                molnighet = "lite moln";
+                                break;
+                            case 2:
+                                molnighet = "lagom mycket moln";
+                                break;
+                            case 3:
+                                molnighet = "lagom mycket moln";
+                                break;
+                            case 4:
+                                molnighet = "hälften moln, hälften himmel";
+                                break;
+                            case 5:
+                                molnighet = "ganska mycket moln";
+                                break;
+                            case 6:
+                                molnighet = "mestadels moln";
+                                break;
+                            case 7:
+                                molnighet = "fullt molntäcke";
+                                break;
+                            case 8:
+                                molnighet = "fullt molntäcke";
+                        }
+                        return molnighet;
+                    }
+
+                    function getRegn(regn) {
+                        var nederbrd;
+                        console.log(regn);
+                        switch (regn) {
+                            case 0:
+                                nederbrd = "ingen nederbörd";
+                                break;
+                            case 1:
+                                nederbrd = "snö";
+                                break;
+                            case 2:
+                                nederbrd = "snö och regn";
+                                break;
+                            case 3:
+                                nederbrd = "regn";
+                                break;
+                            case 4:
+                                nederbrd = "duggregn";
+                                break;
+                            case 5:
+                                nederbrd = "fryst regn";
+                                break;
+                            case 6:
+                                nederbrd = "fryst duggregn";
+                        }
+                        return nederbrd;
+
+                    }
+                    return elmntTime;
+
+                }
+
+
+                console.log("Väder för idag");
+                var idag = 0;
+                var timeToday = document.getElementById('TimeToday');
+                var newList = prognos(idag);
+                timeToday.appendChild(newList);
+
+
+
+                //////console.log("Väderprognos för resten av dagen:")//////
+                console.log("Väderprognos för imorgon:");
+                var imorgon = 24;
+                var timeTomorrow = document.getElementById("TimeTomorrow");
+                var newTomorrowList = prognos(imorgon);
+                timeTomorrow.appendChild(newTomorrowList);
+
+
+
+
+
+            } catch (error) {
+                console.error(error);
             }
-           return molnighet;
-          }
-
-          async function getRegn() {
-            var nederbrd;
-            switch (nederbrPrognos) {
-              case 0:
-                nederbrd = "ingen nederbörd";
-                break;
-              case 1:
-                nederbrd = "snö";
-                break;
-              case 2:
-                nederbrd = "snö och regn";
-                break;
-              case 3:
-                nederbrd = "regn";
-                break;
-              case 4:
-                nederbrd = "duggregn";
-                break;
-              case 5:
-                nederbrd = "fryst regn";
-                break;
-              case 6:
-                nederbrd = "fryst duggregn";
-            }
-            var elmntRain = document.createElement("li");
-            elmntRain.innerHTML = nederbrd;
-          }
-        
-          
-  
-        } catch (error) {
-          console.error(error);
         }
-      }
-  
+
     } catch (error) {
-      console.error(error);
+        console.error(error);
     }
-  }
+}
 
-  getSmhi();
-
-
+getSmhi();

@@ -8,7 +8,6 @@ if (process.env.NODE_ENV !== 'production') {
   const passport = require('passport')
   const flash = require('express-flash')
   const session = require('express-session')
-
   const methodOverride = require('method-override')
 
   // Initialize Passport.js for login inputs
@@ -21,7 +20,7 @@ if (process.env.NODE_ENV !== 'production') {
   
   // Array for storing users
   const users = []
-  
+
   // Set packages in use
   app.set('view-engine', 'ejs')
   app.use(express.urlencoded({ extended: false }))
@@ -30,7 +29,7 @@ if (process.env.NODE_ENV !== 'production') {
   app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,    
   }))
   app.use(passport.initialize())
   app.use(passport.session())

@@ -1,108 +1,95 @@
-
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="../public/JS/style.css">
+    <!-- <link rel="stylesheet" href="../public/JS/style.css"> -->
 </head>
+
 <body>
 
-<h1>Hi <%= name %></h1>
-<form action="/logout?_method=DELETE" method="POST">
-  <button type="submit">Log Out</button>
-</form>
-
-<form id="searchBar">
-    <label for="search" id="searchLabel"></label>
-    <input type="text" id="searchInput" name="searchStation">
-</form>
-
-<div class="list">
-    <ul class="unordered" id="ulList">
-    </ul>
-</div>
-
-
-    <script type='text/javascript' src="/JS/script.js"></script>
+    <h1>Hi <%= name %></h1>
+    <form action="/logout?_method=DELETE" method="POST">
+        <button type="submit">Log Out</button>
+    </form>
 
     <main>
-        <div id="container">
-           
-        
-        <h1>SOLSIDAN</h1>
-    
-        
-        <section>
-            <h3>Idag</h3>
-            <p>Om 12 timmar</p>
-            <ul></ul>
-        </section>
-        
-        <section>
-            <h3>Imorgon</h3>
-            <p>Om 12 timmar</p>
-            <ul></ul>
-        </section>
-       
-        <section>
-            <h3>Dag 3</h3>
-            <p>Om 12 timmar</p>
-            <ul></ul>
-        </section>
-    
-        <section>
-            <h3>Dag 4</h3>
-            <p>Om 12 timmar</p>
-            <ul></ul>
-        </section>
-    
-        <section>
-            <h3>Dag 5</h3>
-            <p>Om 12 timmar</p>
-            <ul></ul>
-        </section>
-        
-        <section>
-            <h3>Dag 6</h3>
-            <p>Om 12 timmar</p>
-            <ul></ul>
-        </section>
-       
-        <section>
-            <h3>Dag 7</h3>
-            <p>Om 12 timmar</p>
-            <ul></ul>
-        </section>
-        
-        <section>
-            <h3>Dag 8</h3>
-            <p>Om 12 timmar</p>
-            <ul></ul>
-        </section>
-       
-        <section>
-            <h3>Dag 9</h3>
-            <p>Om 12 timmar</p>
-            <ul></ul>
-        </section>
-       
-        <section>
-             <h3>Dag 10</h3>
-             <p>Om 12 timmar</p>
-            <ul></ul>
-        </section>
-    
-        <footer></footer>
-    </div>
-        </main>
 
+        <div id="container">
+
+
+            <h1>SOLSIDAN</h1>
+
+            <form id="searchBar">
+                <input type="text" id="searchInput" name="searchStation" placeholder="Väderstation..">
+                <button id="searchBtn">Sök</button>
+            </form>
+
+            <ul id="ulList"></ul>
+
+
+            <section>
+                <h3>Idag</h3>
+
+                <div id="TimeToday"></div>
+
+            </section>
+
+            <section>
+                <h3>Imorgon</h3>
+                <div id="TimeTomorrow"></div>
+            </section>
+
+            <section>
+                <h3>Dag 3</h3>
+                <div id="TimeDayThree"></div>
+            </section>
+
+            <section>
+                <h3>Dag 4</h3>
+                <ul id="TimeDayFour"></ul>
+            </section>
+
+            <section>
+                <h3>Dag 5</h3>
+                <ul id="TimeDayFive"></ul>
+            </section>
+
+            <section>
+                <h3>Dag 6</h3>
+                <ul id="TimeDaySix"></ul>
+            </section>
+
+            <section>
+                <h3>Dag 7</h3>
+                <ul id="TimeDaySeven"></ul>
+            </section>
+
+            <section>
+                <h3>Dag 8</h3>
+                <ul id="TimeDayEight"></ul>
+            </section>
+
+            <section>
+                <h3>Dag 9</h3>
+                <ul id="TimeDayNine"></ul>
+            </section>
+
+            <section>
+                <h3>Dag 10</h3>
+                <ul id="TimeDayTen"></ul>
+            </section>
+
+            <footer></footer>
+        </div>
+    </main>
+    <script type='text/javascript' src="../public/JS/script.js"></script>
+    <!-- <script type="text/javascript" src="js.js"></script> -->
 </body>
+
+
 </html>
-<!-- 
-<div class="list">
-    <select name="" value="Välj ort"placeholder="Välj ort" id="ulList">
-        <option id="orterLista" >
-        </option>
-    </select>
-</div> -->
+
+
+</html>
