@@ -1,0 +1,49 @@
+#container {
+    width: 90%;
+    margin: 0 auto;
+    gap: 2%;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+   
+}
+
+body{
+    background-color: #EDF6F7;
+}
+
+h1{
+    font-family: 'Times New Roman', Times, serif;
+    grid-column: 1/13;
+    height: 50px;
+}
+
+section{
+border-style: ridge ridge ridge solid;
+border-left-color: blue;
+height: 150px;
+background-color: lightsteelblue;
+box-shadow: 2px 2px 4px black;
+grid-column: 4/13;
+}
+
+h3{
+    width: 50%;
+    float: left;
+}
+p{
+    width: 50%;
+    float: right;
+}
+#ulList{
+width: 100%;
+max-height: 600px;
+overflow: scroll;
+grid-column: 1/13;
+}
+
+footer{
+    border-style: solid;
+    height: 50px; 
+    grid-column: 1/13;
+}
+    

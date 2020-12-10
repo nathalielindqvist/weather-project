@@ -28,7 +28,7 @@ async function getSmhi() {
                 console.error(error);
             }
 
-        })
+        }) 
 ////////////////////////////////////////////////////////////
 ///////////GÖR FÖRSTA BOKSTAV I STRÄNG TILL STOR BOKSTAV
         function capitalizeFirstLetter(string) {
@@ -81,29 +81,46 @@ async function getSmhi() {
           const townResponse = await fetch("https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/" + long + "/lat/" + lat + "/data.json");
           const townData = await townResponse.json();
           console.log(townData);
-          
+          var todayList =  document.getElementById('TimeToday');
+      
           var nu = townData.timeSeries[0].validTime;
           var nuvarandeTid = nu.slice(11, 13);
           midnatt = 24 - nuvarandeTid;
           
-          console.log("Väderprognos för resten av dagen:")
+          //////console.log("Väderprognos för resten av dagen:")//////
           for (i = 0; i < midnatt; i++) {
               var temp = (townData.timeSeries[i].parameters[1].values[0]);
               var nederbrPrognos = (townData.timeSeries[i].parameters[15].values[0]);
               var mps = (townData.timeSeries[i].parameters[4].values[0]);
               var molnTotal = (townData.timeSeries[i].parameters[7].values[0]);
               var humidity = (townData.timeSeries[i].parameters[5].values[0]);
-            console.log("-----Klockan " + nuvarandeTid)
-            console.log(temp + "°");
-            getRegn();
-            console.log(mps + " m/sek");
-            getMoln();
-            console.log(humidity + "% luftfuktighet");
-            console.log(" ");
+
+              var elmntTime = document.createElement("ul")
+              elmntTime.innerHTML = "-----Klockan " + nuvarandeTid + ":00";
+              var elmntTemp = document.createElement("li")
+              elmntTemp.innerHTML = temp + "°";
+              var elmntWind = document.createElement("li")
+              elmntWind.innerHTML = mps + " m/sek";
+              var elmntHumidity = document.createElement("li")
+              elmntHumidity.innerHTML = humidity + "% luftfuktighet";
+              
+              getRegn();
+              getMoln();
+            /*  var elmntCloud = document.createElement("li");
+            elmntCloud.innerHTML = molnighet; */
+              todayList.appendChild(elmntTime);
+              elmntTime.appendChild(elmntTemp);
+              elmntTime.appendChild(elmntWind);
+              elmntTime.appendChild(elmntHumidity);
+             /* elmntTime.appendChild(elmntCloud);
+              elmntTime.appendChild(elmntRain); */
+              
             nuvarandeTid++;
+            
           }
           
           console.log("Väderprognos för imorgon:" );
+          var tomorrowList =  document.getElementById('TimeTomorrow');
           var imorgon = midnatt + 24;
           var u = 0; 
           for (i = midnatt; i < imorgon; i++ ) {
@@ -112,14 +129,29 @@ async function getSmhi() {
               var mps = (townData.timeSeries[i].parameters[4].values[0]);
               var molnTotal = (townData.timeSeries[i].parameters[7].values[0]);
               var humidity = (townData.timeSeries[i].parameters[5].values[0]);
-            console.log("-----Klockan " + u)
+
+              var elmntTimeTomorrow = document.createElement("ul")
+              elmntTimeTomorrow.innerHTML = "-----Klockan " + u + ":00";
+              var elmntTempTomorrow = document.createElement("li")
+              elmntTempTomorrow.innerHTML = temp + "°";
+              var elmntWindTomorrow = document.createElement("li")
+              elmntWindTomorrow.innerHTML = mps + "m/sek";
+              var elmntHumidityTomorrow = document.createElement("li")
+              elmntHumidityTomorrow.innerHTML = humidity + "% luftfuktighet";
+
+              tomorrowList.appendChild(elmntTimeTomorrow);
+              elmntTimeTomorrow.appendChild(elmntTempTomorrow);
+              elmntTimeTomorrow.appendChild(elmntWindTomorrow);
+              elmntTimeTomorrow.appendChild(elmntHumidityTomorrow);
+
+           /* console.log("-----Klockan " + u)
             console.log(temp + "°");
             getRegn();
             console.log(mps + " m/sek");
             getMoln();
             console.log(humidity + "% luftfuktighet");
-            console.log(" ");
-            u ++;
+            console.log(" "); */
+            u ++; 
           }
   
   
@@ -153,7 +185,7 @@ async function getSmhi() {
               case 8:
                 molnighet = "fullt molntäcke";
             }
-            console.log(molnighet);
+           return molnighet;
           }
 
           async function getRegn() {
@@ -180,7 +212,8 @@ async function getSmhi() {
               case 6:
                 nederbrd = "fryst duggregn";
             }
-            console.log(nederbrd);
+            var elmntRain = document.createElement("li");
+            elmntRain.innerHTML = nederbrd;
           }
         
           
@@ -194,7 +227,7 @@ async function getSmhi() {
       console.error(error);
     }
   }
-  
+
   getSmhi();
 
 
