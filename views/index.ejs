@@ -1,95 +1,89 @@
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <!-- <link rel="stylesheet" href="../public/JS/style.css"> -->
+    <meta charset="utf-a">
+    <title>Solsidan</title>
+    <link rel="stylesheet" href="../public/JS/style.css" type="text/css">
+    
+
 </head>
 
 <body>
+    
+<main>
 
-    <h1>Hi <%= name %></h1>
-    <form action="/logout?_method=DELETE" method="POST">
-        <button type="submit">Log Out</button>
+    <div id="container">
+       
+    
+    <h1>SOLSIDAN</h1>
+
+    <form id="searchBar">
+        <input type="text" id="searchInput" name="searchStation" placeholder="Väderstation..">
+        <button id="searchBtn">Sök</button>
     </form>
 
-    <main>
+    <ul id="ulList"></ul>
 
-        <div id="container">
+    
+    <section>
+        <h3>Idag</h3>
+        
+        <div class="listContainer" id="TimeToday"></div>
+        
+    </section>
+    
+    <section>
+        <h3>Imorgon</h3>
+        <div class="listContainer" id="TimeTomorrow"></div>
+    </section>
+   
+    <section>
+        <h3>Dag 3</h3>
+        <div class="listContainer" id="TimeDayThree"></div>
+    </section>
 
+    <section>
+        <h3>Dag 4</h3>
+        <div class="listContainer" id="TimeDayFour"></div>
+    </section>
 
-            <h1>SOLSIDAN</h1>
+    <section>
+        <h3>Dag 5</h3>
+        <div class="listContainer" id="TimeDayFive"></div>
+    </section>
+    
+    <section>
+        <h3>Dag 6</h3>
+        <div class="listContainer" id="TimeDaySix"></div>
+    </section>
+   
+    <section>
+        <h3>Dag 7</h3>
+        <div class="listContainer" id="TimeDaySeven"></div>
+    </section>
+    
+    <section>
+        <h3>Dag 8</h3>
+        <div class="listContainer" id="TimeDayEight"></div>
+    </section>
+   
+    <section>
+        <h3>Dag 9</h3>
+        <div class="listContainer" id="TimeDayNine"></div>
+    </section>
+   
+    <section>
+         <h3>Dag 10</h3>
+        <div class="listContainer" id="TimeDayTen"></div>
+    </section>
 
-            <form id="searchBar">
-                <input type="text" id="searchInput" name="searchStation" placeholder="Väderstation..">
-                <button id="searchBtn">Sök</button>
-            </form>
-
-            <ul id="ulList"></ul>
-
-
-            <section>
-                <h3>Idag</h3>
-
-                <div id="TimeToday"></div>
-
-            </section>
-
-            <section>
-                <h3>Imorgon</h3>
-                <div id="TimeTomorrow"></div>
-            </section>
-
-            <section>
-                <h3>Dag 3</h3>
-                <div id="TimeDayThree"></div>
-            </section>
-
-            <section>
-                <h3>Dag 4</h3>
-                <ul id="TimeDayFour"></ul>
-            </section>
-
-            <section>
-                <h3>Dag 5</h3>
-                <ul id="TimeDayFive"></ul>
-            </section>
-
-            <section>
-                <h3>Dag 6</h3>
-                <ul id="TimeDaySix"></ul>
-            </section>
-
-            <section>
-                <h3>Dag 7</h3>
-                <ul id="TimeDaySeven"></ul>
-            </section>
-
-            <section>
-                <h3>Dag 8</h3>
-                <ul id="TimeDayEight"></ul>
-            </section>
-
-            <section>
-                <h3>Dag 9</h3>
-                <ul id="TimeDayNine"></ul>
-            </section>
-
-            <section>
-                <h3>Dag 10</h3>
-                <ul id="TimeDayTen"></ul>
-            </section>
-
-            <footer></footer>
-        </div>
+    <footer></footer>
+</div>
     </main>
     <script type='text/javascript' src="../public/JS/script.js"></script>
-    <!-- <script type="text/javascript" src="js.js"></script> -->
+   
 </body>
-
-
-</html>
 
 
 </html>

@@ -24,7 +24,7 @@ if (process.env.NODE_ENV !== 'production') {
   // Set packages in use
   app.set('view-engine', 'ejs')
   app.use(express.urlencoded({ extended: false }))
-  app.use(express.static(__dirname + "/public"));
+  app.use('/public', express.static(__dirname + '/public' ));
   app.use(flash())
   app.use(session({
     secret: process.env.SESSION_SECRET,

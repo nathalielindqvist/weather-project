@@ -8,27 +8,46 @@
 }
 
 body{
-    background-color: #EDF6F7;
+    background-image: url("../img/cloud.jpeg");
+
+    font-family: Montserrat;
 }
 
 h1{
     font-family: 'Times New Roman', Times, serif;
     grid-column: 1/13;
     height: 50px;
+    font-size: 90px;
+}
+
+form{
+    display: flex;
+    zoom: 160%;
+    margin-left: 20px;
 }
 
 section{
 border-style: ridge ridge ridge solid;
 border-left-color: blue;
-height: 150px;
+height: 200px;
 background-color: lightsteelblue;
 box-shadow: 2px 2px 4px black;
 grid-column: 4/13;
 }
 
+#ulList{
+    background-color: whitesmoke;
+}
+
+li{
+    margin-left: 30px;
+}
+
 h3{
-    width: 50%;
+    width: 100%;
     float: left;
+    margin-left: 20px;
+    text-decoration: underline;
 }
 p{
     width: 50%;
@@ -36,9 +55,9 @@ p{
 }
 #ulList{
 width: 100%;
-max-height: 600px;
+max-height: 200px;
 overflow: scroll;
-grid-column: 1/13;
+grid-column: 1/3;
 }
 
 footer{
