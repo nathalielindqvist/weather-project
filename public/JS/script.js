@@ -16,7 +16,6 @@ async function getSmhi() {
                 lowerCaseSearchValue = searchValue.toLowerCase();
 
                 let searchResult = weatherStations.find(element => element.name === capitalizeFirstLetter(lowerCaseSearchValue));
-                console.log(searchResult.name);
                 let searchedLong = getLong(searchResult);
                 let searchedLat = getLat(searchResult);
                 getTown(searchedLong, searchedLat);
@@ -63,7 +62,6 @@ async function getSmhi() {
 
                 clickedLongitute = getLong(weatherStations[i]);
                 clickedLatitude = getLat(weatherStations[i]);
-                console.log(weatherStations[i].name)
                 getTown(clickedLongitute, clickedLatitude);
                 clearPresent();
             })
@@ -94,10 +92,11 @@ async function getSmhi() {
 
                 function prognos(index) {
 
-                    var nu = townData.timeSeries[index].validTime;
-                    var nuvarandeTid = nu.slice(11, 16);
+                    var nu = index.validTime;
+                    var aktuellDag = nu.slice(0, 10);
 
-                    let timeParameterIndex = townData.timeSeries[index].parameters;
+
+                    let timeParameterIndex = index.parameters;
 
                     var temp = timeParameterIndex.find(element => element.name === "t");
                     var nederbrPrognos = timeParameterIndex.find(element => element.name === "pcat");
@@ -106,7 +105,7 @@ async function getSmhi() {
                     var humidity = timeParameterIndex.find(element => element.name === "r");
 
                     var elmntTime = document.createElement("ul")
-                    elmntTime.innerHTML = "Klockan " + nuvarandeTid;
+                    elmntTime.innerHTML = "Datum: " + aktuellDag;
                     var elmntTemp = document.createElement("li")
                     elmntTemp.innerHTML = temp.values + "°C";
                     var elmntWind = document.createElement("li")
@@ -118,7 +117,6 @@ async function getSmhi() {
                     var elmntRain = document.createElement("li");
                     elmntRain.innerHTML = getRegn(nederbrPrognos.values[0]);
 
-                    console.log(molnTotal.values[0]);
 
                     elmntTime.appendChild(elmntTemp);
                     elmntTime.appendChild(elmntWind);
@@ -162,7 +160,6 @@ async function getSmhi() {
 
                     function getRegn(regn) {
                         var nederbrd;
-                        console.log(regn);
                         switch (regn) {
                             case 0:
                                 nederbrd = "ingen nederbörd";
@@ -193,69 +190,103 @@ async function getSmhi() {
                 }
                 
                 console.log("Väder för idag");
-                var nu = townData.timeSeries[0].validTime;
-                var nuvarandeTid = nu.slice(12, 13);
-                //console.log(nuvarandeTid)
+
                 
-                var idag = 0;
+                let dayOne = 0
+                let datedOne = getDate(dayOne)
                 var timeToday = document.getElementById('TimeToday');
-                var newList = prognos(idag);
+                var newList = prognos(datedOne);
                 timeToday.appendChild(newList);
                 
                 console.log("Väderprognos för imorgon:");
-                var midnatt = 24 - nuvarandeTid;
-                var imorgon = midnatt + 12;
+                let dayTwo = 1
+                let datedTwo = getDate(dayTwo)
                 var timeTomorrow = document.getElementById("TimeTomorrow");
-                var newTomorrowList = prognos(imorgon);
+                var newTomorrowList = prognos(datedTwo);
                 timeTomorrow.appendChild(newTomorrowList)
 
                 console.log("Väderprognos för övermorgon:");
-                var dag3 = imorgon + 2;
+                let dayThree = 2
+                let datedThree = getDate(dayThree)
                 var TimeDayThree = document.getElementById("TimeDayThree");
-                var newDag3 = prognos(dag3);
+                var newDag3 = prognos(datedThree);
                 TimeDayThree.appendChild(newDag3)
 
                 console.log("Väderprognos för dag4:");
-                var dag4 = dag3 + 4;
+                let dayFour = 3
+                let datedFour = getDate(dayFour)
                 var TimeDayFour = document.getElementById("TimeDayFour");
-                var newDag4 = prognos(dag4);
+                var newDag4 = prognos(datedFour);
                 TimeDayFour.appendChild(newDag4)
 
                 console.log("Väderprognos för dag5:");
-                var dag5 = dag4 + 4;
+                let dayFive = 4
+                let datedFive = getDate(dayFive)
                 var TimeDayFive = document.getElementById("TimeDayFive");
-                var newDag5 = prognos(dag5);
+                var newDag5 = prognos(datedFive);
                 TimeDayFive.appendChild(newDag5)
                 
                 console.log("Väderprognos för dag6:");
-                var dag6 = dag5 + 4;
+                let daySix = 5
+                let datedSix = getDate(daySix)
                 var TimeDaySix = document.getElementById("TimeDaySix");
-                var newDag6 = prognos(dag6);
+                var newDag6 = prognos(datedSix);
                 TimeDaySix.appendChild(newDag6)
 
                 console.log("Väderprognos för dag7:");
-                var dag7 = dag6 + 3;
+                let daySeven = 6
+                let datedSeven = getDate(daySeven);
                 var TimeDaySeven = document.getElementById("TimeDaySeven");
-                var newDag7 = prognos(dag7);
+                var newDag7 = prognos(datedSeven);
                 TimeDaySeven.appendChild(newDag7)
 
                 console.log("Väderprognos för dag8:");
-                var dag8 = dag7 + 2;
+                let dayEight = 7
+                let datedEight = getDate(dayEight);
                 var TimeDayEight = document.getElementById("TimeDayEight");
-                var newDag8 = prognos(dag8);
+                var newDag8 = prognos(datedEight);
                 TimeDayEight.appendChild(newDag8)
 
                 console.log("Väderprognos för dag9:");
-                var dag9 = dag8 + 2;
+                let dayNine = 8
+                let datedNine = getDate(dayNine);
                 var TimeDayNine = document.getElementById("TimeDayNine");
-                var newDag9 = prognos(dag9);
+                var newDag9 = prognos(datedNine);
                 TimeDayNine.appendChild(newDag9)
 
                 console.log("Väderprognos för dag10:");
-                var dag10 = dag9 + 2;
+                let dayTen = 9
+                let datedTen = getDate(dayTen)
                 var TimeDayTen = document.getElementById("TimeDayTen");
-                var newDag10 = prognos(dag10);
+                var newDag10 = prognos(datedTen);
                 TimeDayTen.appendChild(newDag10)
+
+
+                
+
+                function getFullDate(dateOfChoice) {
+                    let date = new Date();
+                    let year = date.getFullYear();
+                    let month = date.getMonth() + 1;
+                    let day = date.getDate() + dateOfChoice;
+  
+                    return year + "-" + month + "-" + day;
+                  }
+  
+                  function getDate(day){
+      
+                      var indexDay = getFullDate(day);
+                      var timeStamps = townData.timeSeries;
+                      var indexOfDay = "";
+      
+                      for (i = 0; i < timeStamps.length; i++) {
+                          var slicedTimeStamps = timeStamps[i].validTime;
+                          if(slicedTimeStamps.slice(0, 10) == indexDay) {
+                              indexOfDay = timeStamps[i];
+                          }
+                      }
+                      return indexOfDay;
+                  }
 
             } catch (error) {
                 console.error(error);
