@@ -3,8 +3,7 @@ async function getSmhi() {
         const response = await fetch("https://opendata-download-metobs.smhi.se/api/version/latest/parameter/1.json");
         const data = await response.json();
         const weatherStations = data.station;
-
-
+        
         ///////////////////////////////////////////////////////////
         ////////////////////////////////SÖKFUNKTIONEN///////////////
         let searchBtn = document.getElementById("searchBtn");
@@ -18,31 +17,21 @@ async function getSmhi() {
                 let searchResult = weatherStations.find(element => element.name === capitalizeFirstLetter(lowerCaseSearchValue));
                 let searchedLong = getLong(searchResult);
                 let searchedLat = getLat(searchResult);
+
+                var tags = document.getElementsByTagName("h3");
+                for (tag of tags) {
+                    tag.innerHTML = searchResult.name;
+                }
+                
                 getTown(searchedLong, searchedLat);
                 clearPresent();
-
+                
             } catch (error) {
-                alert("try again please");
+                alert("Prova med en annan stavning.");
                 console.error(error);
             }
 
         })
-        ////////////////////////////////////////////////////////////
-        ///////////GÖR FÖRSTA BOKSTAV I STRÄNG TILL STOR BOKSTAV
-        function capitalizeFirstLetter(string) {
-            return string.charAt(0).toUpperCase() + string.slice(1);
-        }
-
-        function clearPresent() {
-
-            let placeHolder = document.getElementsByClassName("listContainer");
-            for (let places of placeHolder) {
-                if (places.childNodes.length == 1) {
-                    places.childNodes[0].remove();
-                }
-            }
-
-        }
 
         //////////////////////////////////////////////////////////
         /////////////////PLACERAR ALLA MÄTSTATIONER I EN LISTA////
@@ -56,15 +45,42 @@ async function getSmhi() {
             listButton.innerHTML = "Välj";
             appList.appendChild(listItem).appendChild(listButton);
 
-            listButton.addEventListener("click", function (e) {
 
-               
+            
+            
+            listButton.addEventListener("click", function (e) {
+                    var tags = document.getElementsByTagName("h3");
+                    for (tag of tags) {
+                        var town = weatherStations[i].name;
+                        tag.innerHTML = town;
+                }
 
                 clickedLongitute = getLong(weatherStations[i]);
                 clickedLatitude = getLat(weatherStations[i]);
                 getTown(clickedLongitute, clickedLatitude);
+                // getTown(stockholmLong, stockholmLat);
                 clearPresent();
             })
+        }
+
+
+        ////////////////////////////////////////////////////////////
+        ///////////GÖR FÖRSTA BOKSTAV I STRÄNG TILL STOR BOKSTAV
+        function capitalizeFirstLetter(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
+
+
+        ////////////////////////////////////////////////////////////
+        /////////////////////////////////RENSAR LISTA PÅ TIDIGARE INFO
+        function clearPresent() {
+
+            let placeHolder = document.getElementsByClassName("listContainer");
+            for (let places of placeHolder) {
+                if (places.childNodes.length == 1) {
+                    places.childNodes[0].remove();
+                }
+            }
 
         }
         /////////////////////////////////////////////
@@ -90,6 +106,7 @@ async function getSmhi() {
                 const townData = await townResponse.json();
                 console.log(townData);
 
+
                 function prognos(index) {
 
                     var nu = index.validTime;
@@ -100,7 +117,7 @@ async function getSmhi() {
 
                     var temp = timeParameterIndex.find(element => element.name === "t");
                     var nederbrPrognos = timeParameterIndex.find(element => element.name === "pcat");
-                    var mps = timeParameterIndex.find(element => element.name === "gust")
+                    var mps = timeParameterIndex.find(element => element.name === "ws")
                     var molnTotal = timeParameterIndex.find(element => element.name === "tcc_mean")
                     var humidity = timeParameterIndex.find(element => element.name === "r");
 
@@ -189,78 +206,68 @@ async function getSmhi() {
 
                 }
                 
-                console.log("Väder för idag");
 
-                
                 let dayOne = 0
                 let datedOne = getDate(dayOne)
                 var timeToday = document.getElementById('TimeToday');
                 var newList = prognos(datedOne);
                 timeToday.appendChild(newList);
                 
-                console.log("Väderprognos för imorgon:");
+                console.log(datedOne);
+
                 let dayTwo = 1
                 let datedTwo = getDate(dayTwo)
                 var timeTomorrow = document.getElementById("TimeTomorrow");
                 var newTomorrowList = prognos(datedTwo);
                 timeTomorrow.appendChild(newTomorrowList)
 
-                console.log("Väderprognos för övermorgon:");
                 let dayThree = 2
                 let datedThree = getDate(dayThree)
                 var TimeDayThree = document.getElementById("TimeDayThree");
                 var newDag3 = prognos(datedThree);
                 TimeDayThree.appendChild(newDag3)
 
-                console.log("Väderprognos för dag4:");
                 let dayFour = 3
                 let datedFour = getDate(dayFour)
                 var TimeDayFour = document.getElementById("TimeDayFour");
                 var newDag4 = prognos(datedFour);
                 TimeDayFour.appendChild(newDag4)
 
-                console.log("Väderprognos för dag5:");
                 let dayFive = 4
                 let datedFive = getDate(dayFive)
                 var TimeDayFive = document.getElementById("TimeDayFive");
                 var newDag5 = prognos(datedFive);
                 TimeDayFive.appendChild(newDag5)
                 
-                console.log("Väderprognos för dag6:");
                 let daySix = 5
                 let datedSix = getDate(daySix)
                 var TimeDaySix = document.getElementById("TimeDaySix");
                 var newDag6 = prognos(datedSix);
                 TimeDaySix.appendChild(newDag6)
 
-                console.log("Väderprognos för dag7:");
                 let daySeven = 6
                 let datedSeven = getDate(daySeven);
                 var TimeDaySeven = document.getElementById("TimeDaySeven");
                 var newDag7 = prognos(datedSeven);
                 TimeDaySeven.appendChild(newDag7)
 
-                console.log("Väderprognos för dag8:");
                 let dayEight = 7
                 let datedEight = getDate(dayEight);
                 var TimeDayEight = document.getElementById("TimeDayEight");
                 var newDag8 = prognos(datedEight);
                 TimeDayEight.appendChild(newDag8)
 
-                console.log("Väderprognos för dag9:");
                 let dayNine = 8
                 let datedNine = getDate(dayNine);
                 var TimeDayNine = document.getElementById("TimeDayNine");
                 var newDag9 = prognos(datedNine);
                 TimeDayNine.appendChild(newDag9)
 
-                console.log("Väderprognos för dag10:");
                 let dayTen = 9
                 let datedTen = getDate(dayTen)
                 var TimeDayTen = document.getElementById("TimeDayTen");
                 var newDag10 = prognos(datedTen);
                 TimeDayTen.appendChild(newDag10)
-
 
                 
 
@@ -291,6 +298,10 @@ async function getSmhi() {
             } catch (error) {
                 console.error(error);
             }
+
+            
+
+
         }
 
     } catch (error) {
