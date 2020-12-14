@@ -1,0 +1,21 @@
+body{
+    background-image: url("../img/cloud.jpeg");
+    font-family: Montserrat;
+    zoom: 140%;
+    text-align: center;
+}
+h1{
+    font-family: 'Times New Roman', Times, serif;
+    grid-column: 1/13;
+    height: 50px;
+    font-size: 80px;
+}
+
+div{
+    margin: 10px;
+}
+input{
+    border-style: ridge ridge ridge solid;
+    border-left-color: blue;
+    background-color: lightsteelblue;
+}
