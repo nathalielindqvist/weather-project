@@ -273,8 +273,8 @@ async function getSmhi() {
                 var newDag10 = prognos(datedTen);
                 TimeDayTen.appendChild(newDag10)
 
-                
-
+//////////////////////////////////////////////////////////                
+//////////////////////////// HÄMTAR DATUM ////////////////
                 function getFullDate(dateOfChoice) {
                     let date = new Date();
                     let year = date.getFullYear();
@@ -302,9 +302,6 @@ async function getSmhi() {
             } catch (error) {
                 console.error(error);
             }
-
-            
-
 
         }
 
