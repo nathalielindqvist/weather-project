@@ -58,7 +58,6 @@ async function getSmhi() {
                 clickedLongitute = getLong(weatherStations[i]);
                 clickedLatitude = getLat(weatherStations[i]);
                 getTown(clickedLongitute, clickedLatitude);
-                // getTown(stockholmLong, stockholmLat);
                 clearPresent();
             })
         }
@@ -104,10 +103,10 @@ async function getSmhi() {
             try {
                 const townResponse = await fetch("https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/" + long + "/lat/" + lat + "/data.json");
                 const townData = await townResponse.json();
-                console.log(townData);
-
 
                 function prognos(index) {
+                    ///////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////TAR FRAM 10 DAGARSPROGNOS OCH SKAPAR LISTITEMS MED DENNA INFO////
 
                     var nu = index.validTime;
                     var aktuellDag = nu.slice(0, 10);
@@ -202,6 +201,9 @@ async function getSmhi() {
                         return nederbrd;
 
                     }
+                    ////////////////////////////////////////
+                    ///////////////////////////////////////
+                    //RETURNAR EN <ul> MED  <li> APPENDADE
                     return elmntTime;
 
                 }
@@ -212,8 +214,10 @@ async function getSmhi() {
                 var timeToday = document.getElementById('TimeToday');
                 var newList = prognos(datedOne);
                 timeToday.appendChild(newList);
-                
-                console.log(datedOne);
+                //////////////////////////////////////////////////////////////////////////////////////
+                ///////////////TAR FRAM AKTUELL DAG, OCH APPENDAR PROGNOSFUNKTIONENS RETURNADE VÄRDE I 
+                ///////////////DEN DIV SOM SKA PRESENTERA LISTAN
+                ///////////////////////////////////////////////////////////////////////////////////////
 
                 let dayTwo = 1
                 let datedTwo = getDate(dayTwo)
