@@ -17,7 +17,7 @@ if (process.env.NODE_ENV !== 'production') {
     email => users.find(user => user.email === email),
     id => users.find(user => user.id === id)
   )
-  
+
   // Array for storing users
   const users = []
 
@@ -29,34 +29,34 @@ if (process.env.NODE_ENV !== 'production') {
   app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
-    saveUninitialized: false,    
+    saveUninitialized: false,
   }))
   app.use(passport.initialize())
   app.use(passport.session())
   app.use(methodOverride('_method'))
-  
+
   // GET request for index file
   app.get('/', checkAuthenticated, (req, res) => {
     res.render('index.ejs', { name: req.user.name })
   })
-  
+
   // GET for login file
   app.get('/login', checkNotAuthenticated, (req, res) => {
     res.render('login.ejs')
   })
-  
+
   // POST request for login file
   app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
     successRedirect: '/',
     failureRedirect: '/login',
     failureFlash: true
   }))
-  
+
   // GET request for register file
   app.get('/register', checkNotAuthenticated, (req, res) => {
     res.render('register.ejs')
   })
-  
+
   // POST request for register file, including password encryption
   app.post('/register', checkNotAuthenticated, async (req, res) => {
     try {
@@ -72,22 +72,22 @@ if (process.env.NODE_ENV !== 'production') {
       res.redirect('/register')
     }
   })
-  
+
   // DELETE request, for logout
   app.delete('/logout', (req, res) => {
     req.logOut()
     res.redirect('/login')
   })
-  
+
   // Check if user is authenticated
   function checkAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
       return next()
     }
-  
+
     res.redirect('/login')
   }
-  
+
   // Check if user is not authenticated
   function checkNotAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
@@ -95,6 +95,7 @@ if (process.env.NODE_ENV !== 'production') {
     }
     next()
   }
-  
-  // Listen to port 3000
-  app.listen(3000)
+
+  let port = process.env.PORT || 4000;
+
+  app.listen(port, () => console.log('Listening on port ' + port));
